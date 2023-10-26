@@ -159,7 +159,7 @@
             var bookedSeats = [];
             while (bookedSeats.length < 3) {
                 var randomSeat = Math.floor(Math.random() * seats.length);
-                if (bookedSeats.indexOf(randomSeat) === -1) {
+                if (seats[randomSeat].status !== 'spacer' && bookedSeats.indexOf(randomSeat) === -1) {
                     bookedSeats.push(randomSeat);
                 }
             }
