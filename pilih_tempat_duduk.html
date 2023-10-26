@@ -9,7 +9,7 @@
         .seats-container {
             display: flex;
             flex-wrap: wrap;
-            max-width: 500px;
+            max-width: 650px;
             margin: 0 auto; 
         }
         .seat {
@@ -62,6 +62,10 @@
         }
         .legend span {
             font-size: 0.8em;
+        }
+        .spacer {
+            height: 20px; 
+            border: none;
         }
     </style>
 </head>
@@ -141,10 +145,14 @@
             var seatRows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
             
             for (var i = 0; i < seatRows.length; i++) {
-                for (var j = 1; j <= 10; j++) {
+                for (var j = 1; j <= 12; j++) {
                     var status = 'available';
                     var seatNumber = seatRows[i] + j;
                     seats.push({id: seatNumber, status: status});
+
+                    if (seatNumber.charAt(1) === '6') {
+                        seats.push({id: 'spacer', status: 'spacer'});
+                    }
                 }
             }
 
@@ -163,8 +171,14 @@
             seats.forEach(function(seat) {
                 var seatElement = document.createElement('div');
                 seatElement.classList.add('seat', seat.status);
-                seatElement.dataset.id = seat.id;
-                seatElement.innerText = seat.id;
+
+                if (seat.status !== 'spacer') {
+                    seatElement.dataset.id = seat.id;
+                    seatElement.innerText = seat.id;
+                } else {
+                    seatElement.style.visibility = 'hidden'; 
+                }
+
                 seatsContainer.appendChild(seatElement);
 
                 seatElement.addEventListener('click', function() {
