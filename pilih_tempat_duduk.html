@@ -9,7 +9,7 @@
         .seats-container {
             display: flex;
             flex-wrap: wrap;
-            max-width: 400px;
+            max-width: 500px;
             margin: 0 auto; 
         }
         .seat {
@@ -137,24 +137,27 @@
             var discountElement = document.getElementById('discount');
             var finalPriceElement = document.getElementById('final-price');
             var totalPrice = 0;
-
             var seats = [];
-
-            for (var i = 1; i <= 64; i++) {
-                var status = 'available';
-                seats.push({id: i, status: status});
+            var seatRows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            
+            for (var i = 0; i < seatRows.length; i++) {
+                for (var j = 1; j <= 10; j++) {
+                    var status = 'available';
+                    var seatNumber = seatRows[i] + j;
+                    seats.push({id: seatNumber, status: status});
+                }
             }
 
             var bookedSeats = [];
             while (bookedSeats.length < 3) {
-                var randomSeat = Math.floor(Math.random() * 64) + 1;
+                var randomSeat = Math.floor(Math.random() * seats.length);
                 if (bookedSeats.indexOf(randomSeat) === -1) {
                     bookedSeats.push(randomSeat);
                 }
             }
 
-            bookedSeats.forEach(function(seatNumber) {
-                seats[seatNumber - 1].status = 'booked';
+            bookedSeats.forEach(function(seatIndex) {
+                seats[seatIndex].status = 'booked';
             });
 
             seats.forEach(function(seat) {
@@ -197,6 +200,7 @@
                 window.location.href = 'menu_pembayaran.html';
             });
         });
+
     </script>
 </body>
 </html>
