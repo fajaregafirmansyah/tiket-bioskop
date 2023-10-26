@@ -204,7 +204,7 @@
                         var finalPrice = totalPrice - discount;
                         finalPriceElement.innerText = 'Rp ' + finalPrice.toLocaleString('id-ID');
                     } else if (seat.status === 'booked') {
-                        alert('Kursi ini sudah terpesan.');
+                        alert('Kursi ini sudah dipesan oleh orang lain.');
                     }
                 });
             });
