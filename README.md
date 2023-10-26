@@ -24,7 +24,7 @@ Jadi total terdapat 4 page.
 
 | Daftar Film | Pilih Tempat Duduk | 
 | ----- | --- |
-| <img width="1440" alt="Daftar Film" src="https://github.com/fajaregafirmansyah/tiket-bioskop/assets/21186672/ffe28462-c7ac-44f1-98a4-ab8d14544c35"> | <img width="1440" alt="Pilih Tempat Duduk" src="https://github.com/fajaregafirmansyah/tiket-bioskop/assets/21186672/7b8f3c83-b1cb-45cb-b109-187ffeeff9e2">  | 
+| <img width="1440" alt="Daftar Film" src="https://github.com/fajaregafirmansyah/tiket-bioskop/assets/21186672/ffe28462-c7ac-44f1-98a4-ab8d14544c35"> | <img width="1440" alt="Screenshot 2023-10-26 at 19 50 26" src="https://github.com/fajaregafirmansyah/tiket-bioskop/assets/21186672/90d61d06-59f4-44a6-9970-615654ea67e2"> | 
 
 | Pembayaran | Riwayat Pemesanan | 
 | ----- | --- |
