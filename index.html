@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Daftar Film</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Bioskop F.E.F</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Daftar Film <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="riwayat_pemesanan.html">Riwayat Pemesanan</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="row" id="film-list">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var filmData = [
+                {title: 'Waktu Maghrib', synopsis: 'Sinopsis film waktu maghrib', imageUrl: 'https://cdn0-production-images-kly.akamaized.net/Z4vbXag5lSKJFQDtdUMYdRmPbyc=/800x1066/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4330163/original/074312200_1676872732-Waktu_Maghrib_1.jpg'},
+                {title: 'Siksa Kubur', synopsis: 'Sinopsis film siksa kubur', imageUrl: 'https://cdn0-production-images-kly.akamaized.net/W834TptdmnTG_ycLuf7zZCrEIwE=/500x667/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/4352809/original/027604600_1678368069-333394195_880479113036969_2973724313641689845_n__1_.jpg'},
+                {title: 'Sesat', synopsis: 'Sinopsis film sesat', imageUrl: 'https://pbs.twimg.com/media/Dh_ArcfVAAIF6Gy.jpg'}
+            ];
+
+            var filmListContainer = document.getElementById('film-list');
+
+            filmData.forEach(function(film) {
+                var filmCard = document.createElement('div');
+                filmCard.classList.add('col-md-4');
+                filmCard.innerHTML = `
+                    <div class="card">
+                        <img src="${film.imageUrl}" class="card-img-top" alt="${film.title}" onerror="replaceWithLoading(this, '${film.imageUrl}')">
+                        <div class="card-body">
+                            <h5 class="card-title">${film.title}</h5>
+                            <p class="card-text">${film.synopsis}</p>
+                            <a href="pilih_tempat_duduk.html" class="btn btn-primary">Beli Tiket Bioskop</a>
+                        </div>
+                    </div>
+                `;
+                filmListContainer.appendChild(filmCard);
+            });
+        });
+
+        function replaceWithLoading(image, url) {
+            image.src = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921'; 
+            var tempImage = new Image();
+            tempImage.src = url;
+            tempImage.onload = function() {
+                image.src = url;
+            }
+        }
+    </script>
+</body>
+</html>

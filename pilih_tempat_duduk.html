@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pilih Tempat Duduk</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .seats-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 400px;
+            margin: 0 auto; 
+        }
+        .seat {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin: 5px; 
+            cursor: pointer;
+        }
+        .booked {
+            background-color: #4a4848;
+            color: #fff;
+        }
+        .selected {
+            background-color: #5cb85c;
+            color: #fff;
+        }
+        .order-summary {
+            border: 2px solid #ccc;
+            padding: 10px;
+            max-width: 400px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .order-summary ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-summary li {
+            margin-bottom: 5px;
+        }
+        .legend {
+            display: flex;
+            align-items: center;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .legend-item .seat {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        .legend span {
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Bioskop F.E.F</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Daftar Film</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <h1>Pilih Tempat Duduk</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="seats-container">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="seat available"></div>
+                        <span>Kursi tersedia</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="seat booked"></div>
+                        <span>Kursi sudah dipesan</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="seat selected"></div>
+                        <span>Kursi pilihan kamu</span>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h4>Ringkasan Pemesanan</h4>
+                    <ul id="order-summary"></ul>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Total Harga Tiket</td>
+                                <td>: <span id="total-price">Rp 0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Diskon 20%</td>
+                                <td>: <span id="discount">Rp 0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Total Biaya</td>
+                                <td>: <span id="final-price">Rp 0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary btn-block mt-3" id="checkout-btn">Pembayaran</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var seatsContainer = document.querySelector('.seats-container');
+            var orderSummary = document.getElementById('order-summary');
+            var totalPriceElement = document.getElementById('total-price');
+            var discountElement = document.getElementById('discount');
+            var finalPriceElement = document.getElementById('final-price');
+            var totalPrice = 0;
+
+            var seats = [];
+
+            for (var i = 1; i <= 64; i++) {
+                var status = 'available';
+                seats.push({id: i, status: status});
+            }
+
+            var bookedSeats = [];
+            while (bookedSeats.length < 3) {
+                var randomSeat = Math.floor(Math.random() * 64) + 1;
+                if (bookedSeats.indexOf(randomSeat) === -1) {
+                    bookedSeats.push(randomSeat);
+                }
+            }
+
+            bookedSeats.forEach(function(seatNumber) {
+                seats[seatNumber - 1].status = 'booked';
+            });
+
+            seats.forEach(function(seat) {
+                var seatElement = document.createElement('div');
+                seatElement.classList.add('seat', seat.status);
+                seatElement.dataset.id = seat.id;
+                seatElement.innerText = seat.id;
+                seatsContainer.appendChild(seatElement);
+
+                seatElement.addEventListener('click', function() {
+                    if (seat.status === 'available') {
+                        seatElement.classList.toggle('selected');
+                        if (seatElement.classList.contains('selected')) {
+                            var seatNumber = seat.id;
+                            var seatPrice = 80000;
+                            var listItem = document.createElement('li');
+                            listItem.innerText = 'Kursi ' + seatNumber + ' - Rp ' + seatPrice.toLocaleString('id-ID');
+                            listItem.dataset.id = seat.id;
+                            orderSummary.appendChild(listItem);
+                            totalPrice += seatPrice;
+                        } else {
+                            var seatNumber = seat.id;
+                            var listItemToRemove = orderSummary.querySelector('li[data-id="' + seatNumber + '"]');
+                            orderSummary.removeChild(listItemToRemove);
+                            totalPrice -= 80000;
+                        }
+                        totalPriceElement.innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
+                        var discount = totalPrice * 0.2; 
+                        discountElement.innerText = 'Rp ' + discount.toLocaleString('id-ID');
+                        var finalPrice = totalPrice - discount;
+                        finalPriceElement.innerText = 'Rp ' + finalPrice.toLocaleString('id-ID');
+                    } else if (seat.status === 'booked') {
+                        alert('Kursi ini sudah terpesan.');
+                    }
+                });
+            });
+
+            var checkoutButton = document.getElementById('checkout-btn');
+            checkoutButton.addEventListener('click', function() {
+                window.location.href = 'menu_pembayaran.html';
+            });
+        });
+    </script>
+</body>
+</html>
